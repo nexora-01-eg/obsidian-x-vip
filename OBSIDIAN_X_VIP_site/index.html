@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>OBSIDIAN X — A Digital Film</title>
+<meta name="description" content="OBSIDIAN X — an experimental cinematic digital experience.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#050505;--fg:#f4f1e9;--muted:#85837e;--line:rgba(244,241,233,.14);--acid:#d8ff62;--warm:#ff7a45}
+*{box-sizing:border-box}html{background:#050505}body{margin:0;background:#050505;color:var(--fg);font-family:"DM Sans",sans-serif;overflow-x:hidden}a{color:inherit;text-decoration:none}::selection{background:var(--acid);color:#000}
+#stage{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}.grain{position:fixed;inset:-50%;z-index:20;pointer-events:none;opacity:.045;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");animation:noise .18s steps(2) infinite}@keyframes noise{to{transform:translate(-1%,2%)}}
+.nav{position:fixed;z-index:40;inset:0 0 auto;padding:25px 32px;display:flex;align-items:center;justify-content:space-between;mix-blend-mode:difference}.mark{font:700 15px "Space Grotesk";letter-spacing:.22em}.navlinks{display:flex;gap:25px;font-size:10px;text-transform:uppercase;letter-spacing:.16em}.navlinks a{opacity:.65;transition:.3s}.navlinks a:hover{opacity:1}.counter{font:500 10px "Space Grotesk";letter-spacing:.14em;color:#aaa}
+.cursor{position:fixed;z-index:60;width:16px;height:16px;border:1px solid var(--acid);border-radius:50%;transform:translate(-50%,-50%);pointer-events:none;mix-blend-mode:difference;transition:width .22s,height .22s,background .22s}.cursor.big{width:64px;height:64px;background:var(--acid)}
+.progress{position:fixed;z-index:41;left:0;top:0;width:100%;height:2px}.progress i{display:block;width:0;height:100%;background:var(--acid)}
+main{position:relative;z-index:2}
+.hero{min-height:120vh;padding:9vw 6vw 7vw;display:flex;align-items:flex-end;position:relative;overflow:hidden}.hero-copy{width:100%;max-width:1250px}.eyebrow{font-size:10px;letter-spacing:.27em;text-transform:uppercase;color:var(--acid);margin-bottom:28px}.hero h1{font:500 clamp(78px,15vw,225px)/.72 "Space Grotesk";letter-spacing:-.09em;margin:0;position:relative;z-index:2}.hero h1 .ghost{color:transparent;-webkit-text-stroke:1px rgba(244,241,233,.3)}.hero-info{display:flex;justify-content:space-between;gap:30px;max-width:900px;margin-top:45px}.hero-info p{margin:0;max-width:460px;color:#aaa;line-height:1.75}.hero-info span{align-self:end;color:#666;font-size:10px;letter-spacing:.16em;text-transform:uppercase}
+.hero-image{position:absolute;right:7vw;top:15vh;width:min(32vw,480px);height:min(48vw,650px);overflow:hidden;z-index:1;clip-path:inset(100% 0 0 0);animation:heroReveal 1.8s cubic-bezier(.77,0,.18,1) .2s forwards}.hero-image img{width:100%;height:100%;object-fit:cover;filter:contrast(1.1) saturate(.55);transform:scale(1.14);animation:heroZoom 2.8s cubic-bezier(.2,.65,.2,1) .2s forwards}@keyframes heroReveal{to{clip-path:inset(0)}}@keyframes heroZoom{to{transform:scale(1)}}
+.hero-number{position:absolute;right:8vw;bottom:8vh;color:#555;font:500 10px "Space Grotesk";letter-spacing:.18em;z-index:3}
+.section{min-height:100vh;padding:12vw 7vw}.center{display:flex;align-items:center;justify-content:center;text-align:center}.center h2{font:500 clamp(50px,8.7vw,135px)/.86 "Space Grotesk";letter-spacing:-.075em;margin:0;max-width:1100px}.center h2 span{color:#6e6d68}
+.editorial{display:grid;grid-template-columns:1fr 1.6fr;gap:9vw;align-items:center}.index{font:500 11px "Space Grotesk";letter-spacing:.18em;color:var(--acid)}.editorial h2{font:500 clamp(52px,7vw,105px)/.86 "Space Grotesk";letter-spacing:-.07em;margin:0 0 25px}.editorial p{color:#999;line-height:1.8;max-width:500px}.rule{height:1px;background:var(--line);margin-top:40px}.facts{display:grid;grid-template-columns:1fr 1fr;max-width:500px}.fact{padding:17px 0;border-bottom:1px solid var(--line)}.fact small{display:block;color:#666;text-transform:uppercase;letter-spacing:.14em;font-size:9px}.fact strong{font:500 23px "Space Grotesk"}
+.pinned{padding:0;min-height:100vh;overflow:hidden}.pin-head{padding:12vw 7vw 5vw;display:flex;justify-content:space-between;align-items:end}.pin-head h2{font:500 clamp(50px,8vw,120px)/.8 "Space Grotesk";letter-spacing:-.08em;margin:0}.pin-head p{font-size:10px;color:#666;text-transform:uppercase;letter-spacing:.16em}.rail{display:flex;gap:18px;width:max-content;padding-left:7vw;padding-bottom:8vh}.frame{position:relative;width:46vw;max-width:720px;height:65vh;min-height:440px;overflow:hidden;background:#111}.frame:nth-child(2){width:30vw;height:50vh;margin-top:100px}.frame:nth-child(3){width:43vw;height:70vh}.frame:nth-child(4){width:31vw;height:55vh;margin-top:65px}.frame img{width:100%;height:100%;object-fit:cover;filter:saturate(.65) contrast(1.12);transition:transform 1.4s cubic-bezier(.2,.65,.2,1),filter .8s}.frame:hover img{transform:scale(1.08);filter:saturate(.9) contrast(1.08)}.frame:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(0,0,0,.7));pointer-events:none}.frame figcaption{position:absolute;z-index:2;left:20px;right:20px;bottom:18px;display:flex;justify-content:space-between;font-size:9px;text-transform:uppercase;letter-spacing:.15em}.frame figcaption span:last-child{color:#aaa}
+.split-image{display:grid;grid-template-columns:1fr 1fr;min-height:105vh}.visual{min-height:100vh;overflow:hidden;position:relative}.visual img{width:100%;height:100%;object-fit:cover;filter:grayscale(.7) contrast(1.15)}.visual:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,.2),rgba(0,0,0,.65))}.side{padding:12vw 8vw;display:flex;align-items:center;background:#080808}.side h2{font:500 clamp(55px,7.5vw,115px)/.82 "Space Grotesk";letter-spacing:-.075em;margin:0 0 30px}.side p{max-width:430px;color:#92908b;line-height:1.8}.side .tag{color:var(--warm);font-size:10px;letter-spacing:.2em;text-transform:uppercase;margin-bottom:25px}.side .list{margin-top:40px;border-top:1px solid var(--line)}.side .list div{padding:15px 0;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;font-size:10px;text-transform:uppercase;letter-spacing:.12em}.side .list b{font-weight:500;color:#ddd}
+.reveal-title{min-height:85vh;display:flex;align-items:center}.reveal-title h2{font:500 clamp(70px,13vw,195px)/.72 "Space Grotesk";letter-spacing:-.09em;margin:0}.reveal-title em{font-style:normal;color:var(--acid)}
+.final{min-height:110vh;display:flex;align-items:center;justify-content:center;text-align:center}.final h2{font:500 clamp(80px,15vw,220px)/.7 "Space Grotesk";letter-spacing:-.095em;margin:0}.final p{max-width:440px;color:#96938d;line-height:1.75;margin:45px auto 30px}.cta{display:inline-block;border:1px solid rgba(216,255,98,.5);padding:16px 24px;font-size:10px;letter-spacing:.18em;text-transform:uppercase;transition:.35s}.cta:hover{background:var(--acid);color:#000}
+footer{position:relative;z-index:2;border-top:1px solid var(--line);padding:25px 32px;display:flex;justify-content:space-between;color:#5f5e5a;font-size:9px;text-transform:uppercase;letter-spacing:.14em}
+@media(max-width:850px){.nav{padding:20px}.navlinks a{display:none}.hero{padding:30vw 7vw 17vw}.hero-image{width:38vw;height:52vw;right:7vw;top:21vh;opacity:.55}.hero-info{display:block}.hero-info span{display:block;margin-top:25px}.section{padding:25vw 7vw}.editorial{grid-template-columns:1fr;gap:45px}.frame,.frame:nth-child(2),.frame:nth-child(3),.frame:nth-child(4){width:76vw;height:60vh;margin-top:0}.pin-head{padding:25vw 7vw 12vw}.split-image{grid-template-columns:1fr}.visual{min-height:75vh}.side{min-height:90vh;padding:22vw 9vw}}
+</style>
+</head>
+<body>
+<canvas id="stage"></canvas><div class="grain"></div><div class="cursor" id="cursor"></div><div class="progress"><i id="bar"></i></div>
+
+<nav class="nav"><a class="mark" href="#">OBSIDIAN/X</a><div class="navlinks"><a href="#manifesto">Manifesto</a><a href="#archive">Archive</a><a href="#world">World</a><a href="#end">Exit</a></div><div class="counter">04 / 04</div></nav>
+
+<main>
+<section class="hero">
+ <div class="hero-image"><img src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=1400&q=92" alt="Mountain landscape"></div>
+ <div class="hero-copy"><div class="eyebrow">OBSIDIAN X — Digital Film / 2026</div><h1>THE<br><span class="ghost">EDGE</span><br>OF NOW.</h1><div class="hero-info"><p>A high-fidelity experiment in visual storytelling — where photography, generative space and motion are choreographed as one living scene.</p><span>Scroll to enter ↓</span></div></div>
+ <div class="hero-number">01 — 04</div>
+</section>
+
+<section class="section center" id="manifesto"><div><div class="eyebrow">01 / Manifesto</div><h2>What if a website<br>felt like a <span>film?</span></h2></div></section>
+
+<section class="section editorial">
+ <div class="index">02 / Material</div>
+ <div><h2>Not content.<br>Atmosphere.</h2><p>Every image is treated as a scene. Every transition is a camera movement. Every empty space is deliberate. The interface disappears so the experience can take over.</p><div class="rule"></div><div class="facts"><div class="fact"><small>Direction</small><strong>Cinematic</strong></div><div class="fact"><small>Interaction</small><strong>Spatial</strong></div><div class="fact"><small>Motion</small><strong>60 FPS</strong></div><div class="fact"><small>Texture</small><strong>Obsidian</strong></div></div></div>
+</section>
+
+<section class="pinned" id="archive">
+ <div class="pin-head"><h2>FRAME<br>BY FRAME.</h2><p>Archive / 04 selected scenes</p></div>
+ <div class="rail">
+  <figure class="frame"><img src="https://images.unsplash.com/photo-1511497584788-876760111969?auto=format&fit=crop&w=1600&q=92" alt="Forest"><figcaption><span>01 / Stillness</span><span>Nature</span></figcaption></figure>
+  <figure class="frame"><img src="https://images.unsplash.com/photo-1511818966892-d7d671e672a2?auto=format&fit=crop&w=1400&q=92" alt="Architecture"><figcaption><span>02 / Geometry</span><span>Structure</span></figcaption></figure>
+  <figure class="frame"><img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1700&q=92" alt="Mountain"><figcaption><span>03 / Scale</span><span>Distance</span></figcaption></figure>
+  <figure class="frame"><img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1600&q=92" alt="Road"><figcaption><span>04 / Departure</span><span>Movement</span></figcaption></figure>
+ </div>
+</section>
+
+<section class="split-image" id="world">
+ <div class="visual"><img src="https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=1500&q=92" alt="Astronaut in space"></div>
+ <div class="side"><div><div class="tag">03 / The world</div><h2>Leave<br>the<br>ordinary.</h2><p>The visual system shifts from grounded photography into an impossible digital object — a silent presence behind the page, reacting to your movement and the rhythm of the scroll.</p><div class="list"><div><span>Light</span><b>Reactive</b></div><div><span>Depth</span><b>Generative</b></div><div><span>Camera</span><b>Interactive</b></div><div><span>Sound</span><b>Optional</b></div></div></div></div>
+</section>
+
+<section class="section reveal-title"><h2>THE WEB<br>CAN BE<br><em>WILD.</em></h2></section>
+
+<section class="final" id="end"><div><div class="eyebrow">04 / End scene</div><h2>GO<br>FURTHER.</h2><p>OBSIDIAN X is a direction, not a template — a demonstration of what happens when the browser is treated like a cinematic medium.</p><a class="cta" href="#top">Replay the film ↗</a></div></section>
+</main>
+<footer><span>OBSIDIAN/X — A Digital Film</span><span>© 2026 / Experimental Web</span></footer>
+
+<script type="module">
+import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js";
+import {EffectComposer} from "https://cdn.jsdelivr.net/npm/three@0.180.0/examples/jsm/postprocessing/EffectComposer.js";
+import {RenderPass} from "https://cdn.jsdelivr.net/npm/three@0.180.0/examples/jsm/postprocessing/RenderPass.js";
+import {UnrealBloomPass} from "https://cdn.jsdelivr.net/npm/three@0.180.0/examples/jsm/postprocessing/UnrealBloomPass.js";
+import Lenis from "https://cdn.jsdelivr.net/npm/lenis@1.3.8/+esm";
+import gsap from "https://cdn.jsdelivr.net/npm/gsap@3.13.0/index.js";
+import {ScrollTrigger} from "https://cdn.jsdelivr.net/npm/gsap@3.13.0/ScrollTrigger.js";
+gsap.registerPlugin(ScrollTrigger);
+
+const canvas=document.querySelector("#stage");
+const renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true,powerPreference:"high-performance"});
+renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.setSize(innerWidth,innerHeight);
+renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.18;
+const scene=new THREE.Scene(),camera=new THREE.PerspectiveCamera(43,innerWidth/innerHeight,.1,100);
+camera.position.set(0,0,7);
+
+const world=new THREE.Group();scene.add(world);
+const material=new THREE.MeshPhysicalMaterial({color:0x10120f,metalness:.9,roughness:.18,clearcoat:1,clearcoatRoughness:.08,emissive:0x151b0d,emissiveIntensity:.5});
+const core=new THREE.Mesh(new THREE.IcosahedronGeometry(1.55,5),material);world.add(core);
+const shell=new THREE.Mesh(new THREE.IcosahedronGeometry(1.78,2),new THREE.MeshBasicMaterial({color:0xd8ff62,wireframe:true,transparent:true,opacity:.11}));world.add(shell);
+
+for(let i=0;i<5;i++){
+ const r=new THREE.Mesh(new THREE.TorusGeometry(2.05+i*.25,.009,8,240),new THREE.MeshBasicMaterial({color:i%2?0xff7a45:0xd8ff62,transparent:true,opacity:.22}));
+ r.rotation.x=i*.61;r.rotation.y=i*.37;r.rotation.z=i*.2;world.add(r);
+}
+const pcount=5000,pa=new Float32Array(pcount*3);
+for(let i=0;i<pcount;i++){const r=2.8+Math.random()*7.5,a=Math.random()*Math.PI*2,b=Math.acos(2*Math.random()-1);pa[i*3]=r*Math.sin(b)*Math.cos(a);pa[i*3+1]=r*Math.sin(b)*Math.sin(a);pa[i*3+2]=r*Math.cos(b)}
+const pg=new THREE.BufferGeometry();pg.setAttribute("position",new THREE.BufferAttribute(pa,3));
+scene.add(new THREE.Points(pg,new THREE.PointsMaterial({color:0xbfc6b8,size:.011,transparent:true,opacity:.48})));
+
+scene.add(new THREE.AmbientLight(0x2b2b27,1.7));
+const key=new THREE.PointLight(0xd8ff62,62,19),rim=new THREE.PointLight(0xff7a45,44,16),cool=new THREE.PointLight(0x8794ff,28,14);
+key.position.set(3,2,4);rim.position.set(-4,-1,2);cool.position.set(0,4,-3);scene.add(key,rim,cool);
+
+const composer=new EffectComposer(renderer);composer.addPass(new RenderPass(scene,camera));composer.addPass(new UnrealBloomPass(new THREE.Vector2(innerWidth,innerHeight),.72,.8,.14));
+
+const lenis=new Lenis({duration:1.15,smoothWheel:true});
+function raf(t){lenis.raf(t);requestAnimationFrame(raf)}requestAnimationFrame(raf);
+
+let mx=0,my=0,scroll=0;
+addEventListener("mousemove",e=>{mx=e.clientX/innerWidth-.5;my=e.clientY/innerHeight-.5});
+addEventListener("scroll",()=>scroll=scrollY);
+
+function loop(t){
+ requestAnimationFrame(loop);
+ const p=scroll/Math.max(1,document.body.scrollHeight-innerHeight);
+ world.rotation.x+=.0012;world.rotation.y+=.0025;
+ world.rotation.x+=my*.0005;world.rotation.y+=mx*.0007;
+ world.position.y=Math.sin(t*.00042)*.08;world.position.z=p*1.8;
+ world.scale.setScalar(1+Math.sin(t*.001)*.025+p*.16);
+ camera.position.x+=(mx*.36-camera.position.x)*.025;camera.position.y+=(-my*.22-camera.position.y)*.025;camera.lookAt(0,0,0);
+ key.position.x=3+mx*3;key.position.y=2-my*2;rim.position.x=-4-mx*2;cool.position.z=-3+p*5;
+ composer.render();document.querySelector("#bar").style.width=p*100+"%";
+}
+loop(0);
+
+const revealTargets=document.querySelectorAll(".editorial,.center,.side,.reveal-title,.final");
+revealTargets.forEach(el=>gsap.fromTo(el,{y:80,opacity:0},{y:0,opacity:1,duration:1.2,ease:"power3.out",scrollTrigger:{trigger:el,start:"top 82%",once:true}}));
+
+const rail=document.querySelector(".rail");
+gsap.to(rail,{x:()=>-(rail.scrollWidth-innerWidth*.92),ease:"none",scrollTrigger:{trigger:".pinned",start:"top top",end:()=>"+="+(rail.scrollWidth-innerWidth),pin:true,scrub:1.1,anticipatePin:1}});
+gsap.to(".hero-image img",{yPercent:-12,ease:"none",scrollTrigger:{trigger:".hero",start:"top top",end:"bottom top",scrub:true}});
+gsap.to(".hero h1",{yPercent:18,opacity:.45,ease:"none",scrollTrigger:{trigger:".hero",start:"top top",end:"bottom top",scrub:true}});
+
+const cursor=document.querySelector("#cursor");
+addEventListener("mousemove",e=>{cursor.style.left=e.clientX+"px";cursor.style.top=e.clientY+"px"});
+document.querySelectorAll("a,.frame,.hero-image").forEach(el=>{
+ el.addEventListener("mouseenter",()=>cursor.classList.add("big"));
+ el.addEventListener("mouseleave",()=>cursor.classList.remove("big"));
+});
+addEventListener("resize",()=>{renderer.setSize(innerWidth,innerHeight);composer.setSize(innerWidth,innerHeight);camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();ScrollTrigger.refresh()});
+</script>
+</body>
+</html>
